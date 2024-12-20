@@ -49,9 +49,8 @@ install_dependencies 1>> ${LOG_FILE} 2>> ${LOG_FILE}
 
 if [[ ${ERROR} == "" ]]; then
     echo "Info: Building docker image" | tee -a ${LOG_FILE}
-    build_image 1>> ${LOG_FILE} 2>> ${LOG_FILE}
+    build_image 1>> ${LOG_FILE} 2>> ${LOG_FILE} 
 fi
 
 log_message | tee -a ${LOG_FILE}
 
-docker run -d -network=host --name ${IMAGE_NAME} ${IMAGE_NAME}
