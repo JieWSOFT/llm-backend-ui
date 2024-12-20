@@ -1,7 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router';
 
 import { BasicLayout } from '#/layouts';
-import { $t } from '#/locales';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -10,18 +9,18 @@ const routes: RouteRecordRaw[] = [
       icon: 'ic:baseline-view-in-ar',
       keepAlive: true,
       order: 1000,
-      title: $t('demos.title'),
+      title: 'LLM服务管理',
     },
     name: 'Demos',
     path: '/demos',
     children: [
       {
         meta: {
-          title: $t('demos.antd'),
+          title: '模板管理',
         },
         name: 'AntDesignDemos',
         path: '/demos/ant-design',
-        component: () => import('#/views/demos/antd/index.vue'),
+        component: () => import('#/views/llm/tempManagement/index.vue'),
       },
     ],
   },
