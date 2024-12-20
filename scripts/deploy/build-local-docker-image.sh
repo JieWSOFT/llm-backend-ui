@@ -53,3 +53,5 @@ if [[ ${ERROR} == "" ]]; then
 fi
 
 log_message | tee -a ${LOG_FILE}
+
+docker run -d -network=host --name ${IMAGE_NAME} ${IMAGE_NAME}
