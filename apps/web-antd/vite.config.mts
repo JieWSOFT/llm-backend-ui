@@ -13,6 +13,16 @@ export default defineConfig(async () => {
             target: 'http://localhost:5320/api',
             ws: true,
           },
+          '/test': {
+            changeOrigin: true,
+            headers: {
+              referer: 'http://192.168.2.197:3333',
+            },
+            rewrite: (path) => path.replace(/^\/test/, ''),
+            // mock代理目标地址
+            target: 'https://testapi.tymd.fun:11443/api/v1/',
+            ws: true,
+          },
         },
       },
     },

@@ -18,7 +18,7 @@ import { useAuthStore } from '#/store';
 
 import { refreshTokenApi } from './core';
 
-const { apiURL } = useAppConfig(import.meta.env, import.meta.env.PROD);
+const { apiURL, llmURL } = useAppConfig(import.meta.env, import.meta.env.PROD);
 
 function createRequestClient(baseURL: string) {
   const client = new RequestClient({
@@ -75,7 +75,7 @@ function createRequestClient(baseURL: string) {
       const { data: responseData, status } = response;
 
       const { code, data } = responseData;
-      if (status >= 200 && status < 400 && code === 0) {
+      if (status >= 200 && status < 400 && (code === 0 || code === 200)) {
         return data;
       }
 
@@ -110,5 +110,7 @@ function createRequestClient(baseURL: string) {
 }
 
 export const requestClient = createRequestClient(apiURL);
+
+export const requestllmClient = createRequestClient(llmURL);
 
 export const baseRequestClient = new RequestClient({ baseURL: apiURL });
