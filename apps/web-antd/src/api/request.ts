@@ -21,6 +21,7 @@ import { refreshTokenApi } from './core';
 const { apiURL, llmURL } = useAppConfig(import.meta.env, import.meta.env.PROD);
 
 function createRequestClient(baseURL: string) {
+  console.error(baseURL);
   const client = new RequestClient({
     baseURL,
   });
