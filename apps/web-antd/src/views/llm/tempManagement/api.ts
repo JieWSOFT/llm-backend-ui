@@ -15,4 +15,12 @@ async function getTableApi(params: DemoTableApi.PageFetchParams) {
   return requestllmClient.get('/bms/llm/temp/list', { params });
 }
 
-export { getTableApi };
+async function postAddTemplateApi(data: any) {
+  return requestllmClient.post('/bms/llm/temp/create', data);
+}
+
+export const postUpdateTemplateApi = (data: any) =>
+  requestllmClient.put('/bms/llm/temp/update', data);
+export const deleteTemplateApi = (params: any) =>
+  requestllmClient.delete('/bms/llm/temp/delete', { params });
+export { getTableApi, postAddTemplateApi };

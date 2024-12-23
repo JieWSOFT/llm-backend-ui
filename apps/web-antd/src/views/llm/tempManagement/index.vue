@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import type { VxeGridProps } from '#/adapter/vxe-table';
 
-import { Page } from '@vben/common-ui';
+import { Page, useVbenModal } from '@vben/common-ui';
 import { formatDateTime } from '@vben/utils';
 
 import { Button } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 
-import { getTableApi } from './api';
+import { deleteTemplateApi, getTableApi } from './api';
+import EditorModal from './components/Editor.vue';
 
 interface RowType {
   category: string;
@@ -33,6 +34,13 @@ const gridOptions: VxeGridProps<RowType> = {
       title: '创建时间',
       formatter: ({ cellValue }) =>
         cellValue ? formatDateTime(cellValue) : '',
+    },
+    {
+      field: 'action',
+      fixed: 'right',
+      slots: { default: 'action' },
+      title: '操作',
+      width: 180,
     },
   ],
   exportConfig: {},
@@ -69,6 +77,24 @@ const gridOptions: VxeGridProps<RowType> = {
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions,
 });
+
+const [Modal, modelApi] = useVbenModal({
+  // 连接抽离的组件
+  connectedComponent: EditorModal,
+  onClosed() {
+    gridApi.reload();
+  },
+});
+
+const onOpenEditor = (data?: any) => {
+  modelApi.setData(data);
+  modelApi.open();
+};
+
+const onDelete = async (data?: any) => {
+  await deleteTemplateApi({ id: data?.id });
+  gridApi.reload();
+};
 </script>
 
 <template>
@@ -78,8 +104,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <Button class="mr-2" type="primary" @click="() => gridApi.query()">
           刷新当前页面
         </Button>
-        <Button type="primary" @click="() => gridApi.reload()"> 新增 </Button>
+        <Button type="primary" @click="onOpenEditor()"> 新增 </Button>
+      </template>
+      <template #action="{ row }">
+        <Button type="link" @click="onOpenEditor(row)">编辑</Button>
+        <Button danger type="link" @click="onDelete(row)">删除</Button>
       </template>
     </Grid>
+    <Modal />
   </Page>
 </template>

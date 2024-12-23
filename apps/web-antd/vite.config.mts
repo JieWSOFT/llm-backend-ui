@@ -20,7 +20,7 @@ export default defineConfig(async () => {
             },
             rewrite: (path) => path.replace(/^\/test/, ''),
             // mock代理目标地址
-            target: 'https://testapi.tymd.fun:11443/api/v1/',
+            target: 'http://localhost:3332/api/v1/',
             ws: true,
           },
         },
