@@ -53,14 +53,14 @@ const [Form, formApi] = useVbenForm({
 });
 
 async function onSubmit(values: Record<string, any>) {
-  await (currentdata.value
+  await (currentdata.value?.id
     ? postUpdateTemplateApi({ ...values, id: currentdata.value?.id })
     : postAddTemplateApi({ ...values }));
   modalApi.close();
 }
 </script>
 <template>
-  <Modal :title="currentdata ? '编辑' : '新增'">
+  <Modal :title="currentdata?.id ? '编辑' : '新增'">
     <Form />
   </Modal>
 </template>

@@ -16,7 +16,7 @@ export default defineConfig(async () => {
           '/test': {
             changeOrigin: true,
             headers: {
-              referer: 'http://192.168.2.197:3333',
+              referer: 'http://192.168.2.197:3333/',
             },
             rewrite: (path) => path.replace(/^\/test/, ''),
             // mock代理目标地址
